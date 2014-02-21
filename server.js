@@ -16,8 +16,29 @@ app.configure( function() {
   app.use(express.errorHandler({dumpExecutions:true, showStack:true}));
 });
 
+// Mongoose connect & schema setup
+mongoose.connect('mongodb://localhost/library_database');
+
+var Book = new mongoose.Schema({
+  title: String,
+  author: String,
+  releaseDate: Date
+});
+
+var BookModel = mongoose.model('Book', Book);
+
 app.get('/api', function(request, response){
   response.send('API up and running');
+});
+
+app.get('/api/books', function(request, response){
+  return BookModel.find(function(err, books){
+    if(!err){
+      return response.send(books);
+    } else {
+      return console.log(err);
+    }
+  });
 });
 
 var port = 4711;
