@@ -41,6 +41,23 @@ app.get('/api/books', function(request, response){
   });
 });
 
+app.post('/api/books',function(request, response){
+  var book = new BookModel({
+   title: request.body.title,
+   author: request.body.author,
+   releaseDate: request.body.releaseDate
+  });
+  book.save(function(err){
+    if(!err){
+      console.log('%s saved',book.title);
+    } else {
+      console.log('ERROR SAVING: %s',book.title);
+    }
+  });
+
+  return response.send(book);
+});
+
 var port = 4711;
 app.listen(port, function(){
   console.log('Express server listening on port %d in %s mode',
