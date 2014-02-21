@@ -16,6 +16,10 @@ app.configure( function() {
   app.use(express.errorHandler({dumpExecutions:true, showStack:true}));
 });
 
+app.get('/api', function(request, response){
+  response.send('API up and running');
+});
+
 var port = 4711;
 app.listen(port, function(){
   console.log('Express server listening on port %d in %s mode',
