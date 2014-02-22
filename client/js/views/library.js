@@ -13,7 +13,7 @@ app.LibraryView = Backbone.View.extend({
     this.render();
 
     this.listenTo(this.collection, 'add', this.renderBook);
-    this.listenTo(this.collection, 'reset', this.render0);
+    this.listenTo(this.collection, 'reset', this.render);
   },
 
   render: function(){
