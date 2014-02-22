@@ -89,6 +89,19 @@ app.put('/api/books/:id', function(request, response){
   });
 });
 
+app.delete('/api/books/:id', function(request, response){
+  return BookModel.findById(request.params.id, function(err, book){
+    return book.remove(function(err){
+      if(!err){
+        console.log('REMOVED BOOK');
+        return response.send('');
+      } else {
+        console.log(err);
+      }
+    });
+  });
+});
+
 var port = 4711;
 app.listen(port, function(){
   console.log('Express server listening on port %d in %s mode',
