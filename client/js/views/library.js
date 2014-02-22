@@ -43,6 +43,6 @@ app.LibraryView = Backbone.View.extend({
       }
     });
     // Create model instance and add to the collection
-    this.collection.add(new app.Book(formData));
+    this.collection.create(formData);
   }
 });
