@@ -49,13 +49,44 @@ app.post('/api/books',function(request, response){
   });
   book.save(function(err){
     if(!err){
-      console.log('%s saved',book.title);
+      console.log('SAVING ' + book.title);
     } else {
-      console.log('ERROR SAVING: %s',book.title);
+      console.log('ERROR SAVING: ' +book.title);
     }
   });
 
   return response.send(book);
+});
+
+// Colon notation so that express knows this is a dynamic url parameter
+app.get('/api/books/:id', function(request, response){
+  return BookModel.findById(request.params.id, function(err, book){
+    return BookModel.findById(request.params.id, function(err, book){
+      if(!err){
+        return response.send(book);
+      } else {
+        return console.log(err);
+      }
+    });
+  });
+});
+
+app.put('/api/books/:id', function(request, response){
+  console.log('UPDATING: ' + response.body.title);
+  return BookModel.findById( request.params.id, function(err, book){
+    book.title = response.body.title;
+    book.author = response.body.author;
+    book.releaseDate = response.body.releaseDate;
+
+    return book.save(function(err){
+      if(!err){
+        console.log('UPDATED: ' + book.title);
+      } else {
+        console.log('ERROR UPDATING: ' + book.title);
+      }
+      return response.send(book);
+    });
+  });
 });
 
 var port = 4711;
